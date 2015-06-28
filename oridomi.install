@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * oridomi.install
+ */
+
+/**
+ * Implements hook_install().
+ */
+function oridomi_install() {
+  // Add default optionset.
+  variable_set('oridomi_settings_default', 'oridomi_default');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function oridomi_uninstall() {
+  $query = 'SELECT name FROM {variable} WHERE name LIKE :name';
+  $results = db_query($query, array(':name' => db_like('oridomi_') . '%'))->fetchAll();
+
+  foreach ($results as $result) {
+    // Clean up stored variables.
+    variable_del($result->name);
+  }
+}

@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * @file
+ * oridomi_ui.module
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function oridomi_ui_menu() {
+  $items['admin/config/user-interface/oridomi'] = array(
+    'title' => 'Oridomi',
+    'description' => 'Oridomi instance settings list.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('oridomi_settings_form'),
+    'access arguments' => array('administer oridomi settings'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'oridomi_ui.admin.inc',
+  );
+  $items['admin/config/user-interface/oridomi/%'] = array(
+    'title' => 'Oridomi Instance Settings',
+    'description' => 'List instance settings.',
+    'page callback' => 'oridomi_instance_settings_form',
+    'page arguments' => array(4),
+    'access arguments' => array('administer oridomi settings'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'oridomi_ui.admin.inc',
+  );
+  $items['admin/config/user-interface/oridomi/import'] = array(
+    'title' => 'Import Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('oridomi_variable_settings_import_form'),
+    'access arguments' => array('administer oridomi settings'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'oridomi_ui.admin.inc',
+  );
+  $items['admin/config/user-interface/oridomi/%/export'] = array(
+    'title' => 'Export Settings',
+    'page callback' => 'oridomi_export_instance_settings',
+    'page arguments' => array(4),
+    'access arguments' => array('administer oridomi settings'),
+    'type' => MENU_CALLBACK,
+    'file' => 'oridomil_ui.admin.inc',
+  );
+  $items['admin/config/user-interface/oridomi/%/delete/%'] = array(
+    'title' => 'Delete Settings',
+    'page callback' => 'oridomi_delete_instance_settings',
+    'page arguments' => array(4, 6),
+    'access arguments' => array('administer oridomi settings'),
+    'type' => MENU_CALLBACK,
+    'file' => 'oridomi_ui.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function oridomi_ui_permission() {
+  return array(
+    'administer oridomi settings' => array(
+      'title' => t('Administer Oridomi settings'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_variable_settings_form_alter().
+ */
+function oridomi_ui_variable_settings_form_alter(&$form, $form_state, $form_id) {
+  if (isset($form_state['build_info']['args'][0]) && $form_state['build_info']['args'][0] == 'oridomi') {
+    $instance = $form_state['build_info']['args'][1];
+
+    // Include additional submit handler to update settings cache.
+    $form['#submit'][] = 'oridomi_variable_settings_submit';
+
+    // This needs a graceful solution... =/
+    $settings = oridomi_ui_build_instance_settings($instance, $form['#variable_edit_form']);
+    foreach ($form as $key => $component) {
+      if (strpos($key, '[instance_id]') !== FALSE) {
+        $form[$key] = $settings[$key];
+      }
+    }
+  }
+}
+
+/**
+ * Format variable settings form to only display our
+ * instance variables.
+ */
+function oridomi_ui_build_instance_settings($instance, $settings) {
+  module_load_include('form.inc', 'variable');
+
+  foreach ($settings as $key => $setting) {
+    $variable = variable_get_child($setting, $instance);
+    $form[$setting][$variable['name']] = variable_form_element($variable);
+
+    if ($setting == 'oridomi_navigation_text_[instance_id]') {
+      $form[$setting][$variable['name']][0]['#title'] = t('Previous');
+      $form[$setting][$variable['name']][1]['#title'] = t('Next');
+    }
+  }
+
+  return $form;
+}
+
+/**
+ * Helper function, return list of setting variables.
+ */
+function _oridomi_return_setting_vars() {
+  $query = 'SELECT name FROM {variable} WHERE name LIKE :name';
+  $results = db_query($query, array(':name' => db_like('oridomi_') . '%'))->fetchAll();
+
+  return $results;
+}

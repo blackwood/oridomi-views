@@ -1,0 +1,13 @@
+name = Oridomi Views
+description = "Provides OriDomi.js integration into Drupal Views."
+core = 7.x
+package = Oridomi
+
+dependencies[] = views
+dependencies[] = oridomi
+
+files[] = oridomi_views.module
+files[] = oridomi_views.views.inc
+files[] = oridomi_views_plugin_style_oridomi.inc
+files[] = oridomi_views_plugin_pager_oridomi.inc
+

@@ -1,0 +1,98 @@
+{
+	"settings": [],
+	"groups": [
+		{
+			"name": "oridomi",
+			"settings": [
+				{
+					"settingProper": "vPanels",
+					"settingDesc": "number of panels when folding left or right (vertically oriented)",
+					"settingName": "vPanels",
+					"settingType": "Number",
+					"settingImplType": "number",
+					"settingFunctionName": "v_panels",
+					"settingDefault": "5",
+					"min": "",
+					"max": ""
+				},
+				{
+					"settingProper": "hPanels",
+					"settingDesc": "number of panels when folding top or bottom",
+					"settingName": "hPanels",
+					"settingType": "Number",
+					"settingImplType": "number",
+					"settingFunctionName": "h_panels",
+					"settingDefault": "3",
+					"min": "",
+					"max": ""
+				},
+				{
+					"settingProper": "Speed",
+					"settingDesc": "folding duration in ms",
+					"settingName": "speed",
+					"settingType": "Number",
+					"settingImplType": "number",
+					"settingFunctionName": "speed",
+					"settingDefault": "1200",
+					"min": "",
+					"max": ""
+				},
+				{
+					"settingProper": "Ripple",
+					"settingDesc": "backwards ripple effect when animating",
+					"settingName": "ripple",
+					"settingType": "Number",
+					"settingImplType": "number",
+					"settingFunctionName": "ripple",
+					"settingDefault": "2",
+					"min": "",
+					"max": ""
+				},
+				{
+					"settingProper": "shadingIntensity",
+					"settingDesc": "lessen the shading effect",
+					"settingName": "shadingIntensity",
+					"settingType": "Number",
+					"settingImplType": "number",
+					"settingFunctionName": "shading_intensity",
+					"settingDefault": ".5",
+					"min": "",
+					"max": ""
+				},
+				{
+					"settingProper": "Perspective",
+					"settingDesc": "smaller values exaggerate 3D distortion",
+					"settingName": "perspective",
+					"settingType": "Number",
+					"settingImplType": "number",
+					"settingFunctionName": "perspective",
+					"settingDefault": "800",
+					"min": "",
+					"max": ""
+				},
+				{
+					"settingProper": "Maximum Angle",
+					"settingDesc": "keep the user's folds within a range of -40 to 40 degrees",
+					"settingName": "maxAngle",
+					"settingType": "Number",
+					"settingImplType": "number",
+					"settingFunctionName": "max_angle",
+					"settingDefault": "40",
+					"min": "",
+					"max": ""
+				},
+				{
+					"settingProper": "shading",
+					"settingDesc": "Change the shading type",
+					"settingName": "shading",
+					"settingType": "String",
+					"settingImplType": "string",
+					"settingFunctionName": "shading",
+					"settingDefault": "soft",
+					"minLength": "",
+					"maxLength": ""
+				}
+			]
+		}
+	]
+}

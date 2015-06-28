@@ -1,0 +1,6 @@
+name = Oridomi Fields
+description = "Provides Oridomi field formatter."
+core = 7.x
+package = Oridomi
+
+dependencies[] = oridomi

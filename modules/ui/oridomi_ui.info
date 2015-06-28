@@ -1,0 +1,9 @@
+name = Oridomi UI
+description = "Provides user interface for Oridomi variable management."
+core = 7.x
+package = Oridomi
+
+dependencies[] = oridomi
+dependencies[] = variable
+
+configure = admin/config/user-interface/oridomi
